@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Loan Status Prediction | Data Science Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">📊 Loan Prediction</div>
+            <ul class="nav-links">
+                <li><a href="#background">Background</a></li>
+                <li><a href="#data">Data</a></li>
+                <li><a href="#eda">EDA</a></li>
+                <li><a href="#methodology">Methodology</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#insights">Insights</a></li>
+            </ul>
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+                <button class="theme-toggle" aria-label="Toggle theme">☀️</button>
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bank Loan Status Prediction</h1>
+            <p class="tagline">การพยากรณ์สถานะการชำระหนี้ของลูกค้าธนาคาร ด้วย Machine Learning เพื่อลดความเสี่ยงด้านสินเชื่อ</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="100514">0</div>
+                    <div class="stat-label">Training Records</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="19">0</div>
+                    <div class="stat-label">Features</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="5">0</div>
+                    <div class="stat-label">Models Tested</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Background Section -->
+    <section id="background" class="fade-in">
+        <h2 class="section-title">Background</h2>
+        <p class="section-subtitle">ที่มาของ Project และทำไมเรื่องนี้จึงสำคัญ</p>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3>🏦 Business Problem</h3>
+                <p>ในอุตสาหกรรมการเงิน การประเมินความเสี่ยงด้านสินเชื่อ (Credit Risk Assessment) เป็นหนึ่งในงานที่สำคัญที่สุด ธนาคารต้องตัดสินใจอยู่ตลอดเวลาว่าจะปล่อยสินเชื่อให้ลูกค้ารายใด และลูกค้ารายใดมีโอกาส <strong>ผิดนัดชำระหนี้ (Charged Off)</strong> สูง</p>
+            </div>
+            <div class="card">
+                <h3>🎯 Project Goal</h3>
+                <p>สร้าง Machine Learning Model ที่สามารถ <strong>คาดการณ์ได้ว่าลูกค้ารายใดจะชำระหนี้ครบ (Fully Paid)</strong> หรือ <strong>ผิดนัดชำระ (Charged Off)</strong> เพื่อช่วยธนาคารลดความเสี่ยงและตัดสินใจอย่างมีข้อมูลรองรับ</p>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:1rem;">
+            <h3>💡 ไอเดียเริ่มต้น</h3>
+            <p>เริ่มต้นจากคำถามที่ว่า: <em>"เราสามารถใช้ข้อมูลประวัติเครดิตของลูกค้า เพื่อทำนายพฤติกรรมการชำระหนี้ในอนาคตได้หรือไม่?"</em> โดยมีแนวคิดว่า ถ้าเรามีข้อมูล Credit Score, Annual Income, Debt-to-Income Ratio และข้อมูลอื่นๆ ของลูกค้า เราน่าจะสร้าง model ที่แม่นยำพอสมควรได้ วิธีการคือเริ่มจาก EDA เพื่อเข้าใจข้อมูล จากนั้น clean data, สร้าง features ใหม่ และทดลอง models หลายตัวเพื่อเปรียบเทียบ</p>
+        </div>
+    </section>
+
+    <!-- Data Overview Section -->
+    <section id="data" class="fade-in">
+        <h2 class="section-title">Data Overview</h2>
+        <p class="section-subtitle">รายละเอียดของ Dataset ที่ใช้ในการวิเคราะห์</p>
+
+        <div class="grid-2">
+            <div class="card">
+                <h3>📁 Training Set</h3>
+                <p><strong>100,514 rows × 19 columns</strong><br>
+                มี label <code>Loan Status</code> สำหรับ training<br>
+                ประกอบด้วยข้อมูลส่วนตัว สินเชื่อ และประวัติเครดิต</p>
+            </div>
+            <div class="card">
+                <h3>📁 Test Set</h3>
+                <p><strong>10,353 rows × 18 columns</strong><br>
+                ไม่มี label (ใช้สำหรับ prediction)<br>
+                โครงสร้าง columns เหมือน train (ยกเว้น target)</p>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:1rem;">
+            <h3>📋 Feature Description</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Current Loan Amount</td><td>Numerical</td><td>จำนวนเงินกู้ปัจจุบัน</td></tr>
+                    <tr><td>Term</td><td>Categorical</td><td>ระยะเวลาสินเชื่อ (Short/Long Term)</td></tr>
+                    <tr><td>Credit Score</td><td>Numerical</td><td>คะแนนเครดิต</td></tr>
+                    <tr><td>Annual Income</td><td>Numerical</td><td>รายได้ต่อปี</td></tr>
+                    <tr><td>Years in current job</td><td>Categorical</td><td>อายุงานปัจจุบัน</td></tr>
+                    <tr><td>Home Ownership</td><td>Categorical</td><td>สถานะที่อยู่อาศัย</td></tr>
+                    <tr><td>Purpose</td><td>Categorical</td><td>วัตถุประสงค์ในการกู้</td></tr>
+                    <tr><td>Monthly Debt</td><td>Numerical</td><td>หนี้ต่อเดือน</td></tr>
+                    <tr><td>Years of Credit History</td><td>Numerical</td><td>อายุประวัติเครดิต (ปี)</td></tr>
+                    <tr><td>Number of Open Accounts</td><td>Numerical</td><td>จำนวนบัญชีที่เปิดอยู่</td></tr>
+                    <tr><td>Number of Credit Problems</td><td>Numerical</td><td>จำนวนปัญหาด้านเครดิต</td></tr>
+                    <tr><td>Current Credit Balance</td><td>Numerical</td><td>ยอดหนี้คงค้าง</td></tr>
+                    <tr><td>Maximum Open Credit</td><td>Numerical</td><td>วงเงินเครดิตสูงสุด</td></tr>
+                    <tr><td>Bankruptcies</td><td>Numerical</td><td>จำนวนครั้งที่ล้มละลาย</td></tr>
+                    <tr><td>Tax Liens</td><td>Numerical</td><td>จำนวน Tax Liens</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- EDA Section -->
+    <section id="eda" class="fade-in">
+        <h2 class="section-title">Exploratory Data Analysis</h2>
+        <p class="section-subtitle">ผลจากการสำรวจข้อมูลเบื้องต้น</p>
+
+        <div class="chart-container">
+            <img src="assets/target_distribution.png" alt="Target Distribution">
+            <p class="chart-caption">สัดส่วน Fully Paid vs Charged Off — ข้อมูลมี imbalance เล็กน้อย โดย Fully Paid มีจำนวนมากกว่า</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="assets/missing_values.png" alt="Missing Values">
+            <p class="chart-caption">เปอร์เซ็นต์ Missing Values แต่ละ column — Months since last delinquent มี missing สูงสุด</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="assets/numerical_distributions.png" alt="Numerical Distributions">
+            <p class="chart-caption">Distribution ของ numerical features — พบค่าผิดปกติ 99,999,999 ใน Current Loan Amount</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="assets/correlation_heatmap.png" alt="Correlation Heatmap">
+            <p class="chart-caption">Correlation Matrix แสดงความสัมพันธ์ระหว่าง numerical features</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="assets/categorical_features.png" alt="Categorical Features">
+            <p class="chart-caption">Categorical features แยกตาม Loan Status</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="assets/charged_off_rate.png" alt="Charged Off Rate">
+            <p class="chart-caption">อัตรา Charged Off แยกตาม categories ต่างๆ</p>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section id="methodology" class="fade-in">
+        <h2 class="section-title">Methodology</h2>
+        <p class="section-subtitle">ขั้นตอนและวิธีการที่ใช้ในการวิเคราะห์</p>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="step-number">Step 1</span>
+                <h3>Data Cleaning</h3>
+                <p>แทนค่า 99,999,999 ด้วย NaN, จัดการ missing values ด้วย median imputation, แปลง 'Years in current job' จาก text เป็น numeric, และ drop ID columns ที่ไม่จำเป็น</p>
+            </div>
+            <div class="timeline-item">
+                <span class="step-number">Step 2</span>
+                <h3>Feature Engineering</h3>
+                <p>สร้าง features ใหม่: <strong>Debt-to-Income Ratio</strong> (Monthly Debt / Monthly Income), <strong>Credit Utilization</strong> (Current Balance / Max Credit), และ <strong>Loan-to-Income Ratio</strong></p>
+            </div>
+            <div class="timeline-item">
+                <span class="step-number">Step 3</span>
+                <h3>Encoding & Scaling</h3>
+                <p>One-Hot Encoding สำหรับ categorical features (Term, Home Ownership, Purpose) และ StandardScaler สำหรับ Logistic Regression</p>
+            </div>
+            <div class="timeline-item">
+                <span class="step-number">Step 4</span>
+                <h3>Model Training</h3>
+                <p>ทดลอง 4 models: Logistic Regression, Decision Tree, Random Forest, Gradient Boosting พร้อม stratified 80/20 train-validation split</p>
+            </div>
+            <div class="timeline-item">
+                <span class="step-number">Step 5</span>
+                <h3>Hyperparameter Tuning</h3>
+                <p>ใช้ GridSearchCV ปรับ hyperparameters ของ best model (Gradient Boosting) ค้นหา n_estimators, max_depth, learning_rate ที่ดีที่สุด</p>
+            </div>
+            <div class="timeline-item">
+                <span class="step-number">Step 6</span>
+                <h3>Evaluation & Prediction</h3>
+                <p>ประเมินด้วย Confusion Matrix, Classification Report, ROC Curve แล้ว predict test set</p>
+            </div>
+        </div>
+
+        <div style="margin-top:2rem;">
+            <h3 style="margin-bottom:1rem;">Tools & Technologies</h3>
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Seaborn</span>
+            <span class="tag">Scikit-learn</span>
+            <span class="tag">Jupyter Notebook</span>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="fade-in">
+        <h2 class="section-title">Results</h2>
+        <p class="section-subtitle">ผลลัพธ์จากการเปรียบเทียบ Models</p>
+
+        <div class="grid-3" id="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value" id="accuracy-val">—</div>
+                <div class="metric-label">Accuracy</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="f1-val">—</div>
+                <div class="metric-label">F1 Score</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="auc-val">—</div>
+                <div class="metric-label">AUC-ROC</div>
+            </div>
+        </div>
+        <p style="text-align:center;color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">* ค่า metrics จะ update เมื่อรัน notebook เสร็จสมบูรณ์</p>
+
+        <div class="chart-container" style="margin-top:2rem;">
+            <img src="assets/model_comparison.png" alt="Model Comparison">
+            <p class="chart-caption">เปรียบเทียบ performance ของแต่ละ model และ ROC Curves</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="assets/final_evaluation.png" alt="Final Evaluation">
+            <p class="chart-caption">Confusion Matrix และ ROC Curve ของ Final Model</p>
+        </div>
+
+        <div class="chart-container">
+            <img src="assets/feature_importance.png" alt="Feature Importance">
+            <p class="chart-caption">Top 15 Feature Importances จาก Gradient Boosting Model</p>
+        </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section id="insights" class="fade-in">
+        <h2 class="section-title">Key Insights</h2>
+        <p class="section-subtitle">สิ่งที่ค้นพบจากการวิเคราะห์และข้อเสนอแนะเชิง Business</p>
+
+        <div class="insight-item">
+            <div class="insight-icon">📊</div>
+            <div>
+                <h4>Credit Score เป็นตัวชี้วัดสำคัญที่สุด</h4>
+                <p>ลูกค้าที่มี Credit Score ต่ำ มีโอกาสผิดนัดชำระหนี้สูงกว่าอย่างชัดเจน ธนาคารควรให้ความสำคัญกับ Credit Score ในการ screening ลูกค้า</p>
+            </div>
+        </div>
+
+        <div class="insight-item">
+            <div class="insight-icon">💰</div>
+            <div>
+                <h4>Debt-to-Income Ratio สูง = ความเสี่ยงสูง</h4>
+                <p>ลูกค้าที่มี Monthly Debt เทียบกับ Income สูง มีแนวโน้มที่จะ default มากกว่า ควรตั้ง threshold สำหรับ Debt-to-Income ratio ที่เหมาะสม</p>
+            </div>
+        </div>
+
+        <div class="insight-item">
+            <div class="insight-icon">🏠</div>
+            <div>
+                <h4>Home Ownership มีผลต่อพฤติกรรมการชำระ</h4>
+                <p>ลูกค้าที่เป็นเจ้าของบ้าน (Own Home) มีอัตรา Charged Off ต่ำกว่าลูกค้าที่เช่า (Rent) ข้อมูลนี้สามารถนำไปใช้เป็นปัจจัยเสริมในการประเมิน</p>
+            </div>
+        </div>
+
+        <div class="insight-item">
+            <div class="insight-icon">⏱️</div>
+            <div>
+                <h4>Short Term Loans มีอัตรา Default ต่ำกว่า</h4>
+                <p>สินเชื่อระยะสั้นมีโอกาส Charged Off น้อยกว่าสินเชื่อระยะยาว ธนาคารควรพิจารณาระยะเวลาสินเชื่อเป็นปัจจัยในการประเมินความเสี่ยง</p>
+            </div>
+        </div>
+
+        <div class="insight-item">
+            <div class="insight-icon">⚠️</div>
+            <div>
+                <h4>Data Quality ต้องปรับปรุง</h4>
+                <p>พบค่า 99,999,999 ใน Current Loan Amount ซึ่งเป็น placeholder สำหรับ missing values และมี missing values ค่อนข้างมากใน Credit Score, Annual Income ระบบจัดเก็บข้อมูลควรได้รับการปรับปรุง</p>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:2rem;">
+            <h3>🔮 Future Work</h3>
+            <p>
+                • ทดลองเพิ่มเติมด้วย XGBoost, LightGBM หรือ Neural Networks<br>
+                • เพิ่ม Feature Engineering จาก domain knowledge ของผู้เชี่ยวชาญด้านการเงิน<br>
+                • ใช้ techniques อย่าง SMOTE เพื่อจัดการ class imbalance<br>
+                • สร้าง real-time prediction API สำหรับใช้งานจริง
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Bank Loan Status Prediction — Data Science Portfolio Project</p>
+        <p style="margin-top:0.5rem;">
+            <a href="https://github.com" target="_blank">GitHub</a> ·
+            Built with Python, Scikit-learn & ❤️
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

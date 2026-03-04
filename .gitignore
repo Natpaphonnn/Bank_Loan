@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Executed notebook (keep original)
+Bank_Loan_Status_executed.ipynb
