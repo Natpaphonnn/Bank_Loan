@@ -52,6 +52,7 @@
                     <div class="form-group">
                         <label for="loanAmount">Current Loan Amount ($)</label>
                         <input type="number" id="loanAmount" placeholder="e.g. 300000" required>
+                        <span class="form-hint">จำนวนเงินกู้ที่คงค้างอยู่ในปัจจุบัน (หน่วย: ดอลลาร์)</span>
                     </div>
                     <div class="form-group">
                         <label for="term">Term (ระยะเวลา)</label>
@@ -59,6 +60,7 @@
                             <option value="Short Term">Short Term</option>
                             <option value="Long Term">Long Term</option>
                         </select>
+                        <span class="form-hint">ระยะเวลาสัญญาเงินกู้ — Short Term (< 3 ปี) หรือ Long Term (3 ปีขึ้นไป)</span>
                     </div>
                     <div class="form-group">
                         <label for="purpose">Purpose (วัตถุประสงค์)</label>
@@ -79,6 +81,7 @@
                             <option value="renewable_energy">Renewable Energy</option>
                             <option value="Other">Other</option>
                         </select>
+                        <span class="form-hint">เหตุผลหลักในการกู้เงิน เช่น รวมหนี้, ปรับปรุงบ้าน, ซื้อรถ เป็นต้น</span>
                     </div>
                 </div>
             </div>
@@ -90,10 +93,12 @@
                     <div class="form-group">
                         <label for="creditScore">Credit Score</label>
                         <input type="number" id="creditScore" placeholder="e.g. 720" min="300" max="850" required>
+                        <span class="form-hint">คะแนนเครดิตจากสำนักงานเครดิต (300-850) — ยิ่งสูงยิ่งดี สามารถตรวจสอบได้จากธนาคารหรือเว็บไซต์ เช่น Credit Karma</span>
                     </div>
                     <div class="form-group">
                         <label for="annualIncome">Annual Income ($)</label>
                         <input type="number" id="annualIncome" placeholder="e.g. 1200000" required>
+                        <span class="form-hint">รายได้รวมต่อปีก่อนหักภาษี (หน่วย: ดอลลาร์) ดูได้จากสลิปเงินเดือนหรือแบบยื่นภาษี</span>
                     </div>
                     <div class="form-group">
                         <label for="yearsJob">Years in Current Job</label>
@@ -110,6 +115,7 @@
                             <option value="9">9 years</option>
                             <option value="10">10+ years</option>
                         </select>
+                        <span class="form-hint">ระยะเวลาที่ทำงานในตำแหน่งปัจจุบัน — ยิ่งนานยิ่งแสดงถึงความมั่นคงทางอาชีพ</span>
                     </div>
                     <div class="form-group">
                         <label for="homeOwnership">Home Ownership</label>
@@ -119,6 +125,7 @@
                             <option value="Rent">Rent</option>
                             <option value="HaveMortgage">Have Mortgage</option>
                         </select>
+                        <span class="form-hint">สถานะที่อยู่อาศัย — เป็นเจ้าของ (Own Home), กู้ซื้อบ้าน (Mortgage), หรือ เช่า (Rent)</span>
                     </div>
                 </div>
             </div>
@@ -130,34 +137,42 @@
                     <div class="form-group">
                         <label for="monthlyDebt">Monthly Debt ($)</label>
                         <input type="number" id="monthlyDebt" step="0.01" placeholder="e.g. 15000" required>
+                        <span class="form-hint">ยอดหนี้ที่ต้องจ่ายต่อเดือนทั้งหมด รวมค่าผ่อนบ้าน รถ บัตรเครดิต และหนี้อื่นๆ</span>
                     </div>
                     <div class="form-group">
                         <label for="creditHistory">Years of Credit History</label>
                         <input type="number" id="creditHistory" step="0.1" placeholder="e.g. 15.5" required>
+                        <span class="form-hint">อายุของประวัติเครดิต (ปี) — นับตั้งแต่เปิดบัญชีเครดิตแรก ยิ่งยาวนานยิ่งดี</span>
                     </div>
                     <div class="form-group">
                         <label for="openAccounts">Number of Open Accounts</label>
                         <input type="number" id="openAccounts" placeholder="e.g. 10" required>
+                        <span class="form-hint">จำนวนบัญชีเครดิตที่เปิดใช้งานอยู่ เช่น บัตรเครดิต, สินเชื่อรถ, สินเชื่อบ้าน</span>
                     </div>
                     <div class="form-group">
                         <label for="creditProblems">Number of Credit Problems</label>
                         <input type="number" id="creditProblems" placeholder="e.g. 0" required>
+                        <span class="form-hint">จำนวนครั้งที่เคยมีปัญหาด้านเครดิต เช่น จ่ายล่าช้ามากกว่า 90 วัน, ถูกฟ้อง, หรือบัญชีถูกส่งทวงหนี้ — ดูได้จากรายงานเครดิต</span>
                     </div>
                     <div class="form-group">
                         <label for="creditBalance">Current Credit Balance ($)</label>
                         <input type="number" id="creditBalance" placeholder="e.g. 200000" required>
+                        <span class="form-hint">ยอดหนี้คงค้างรวมทุกบัญชี ณ ปัจจุบัน รวมบัตรเครดิต สินเชื่อบ้าน สินเชื่อรถ ฯลฯ</span>
                     </div>
                     <div class="form-group">
                         <label for="maxCredit">Maximum Open Credit ($)</label>
                         <input type="number" id="maxCredit" placeholder="e.g. 500000" required>
+                        <span class="form-hint">วงเงินเครดิตสูงสุดที่ได้รับอนุมัติรวมทุกบัญชี (credit limit รวม)</span>
                     </div>
                     <div class="form-group">
                         <label for="bankruptcies">Bankruptcies</label>
                         <input type="number" id="bankruptcies" placeholder="e.g. 0" required>
+                        <span class="form-hint">จำนวนครั้งที่เคยยื่นล้มละลาย — การล้มละลายคือการที่ศาลประกาศว่าไม่สามารถชำระหนี้ได้ ปกติจะเป็น 0</span>
                     </div>
                     <div class="form-group">
                         <label for="taxLiens">Tax Liens</label>
                         <input type="number" id="taxLiens" placeholder="e.g. 0" required>
+                        <span class="form-hint">จำนวน Tax Liens — คือการที่รัฐยึดทรัพย์เนื่องจากค้างชำระภาษี ถ้าไม่เคยมีให้ใส่ 0</span>
                     </div>
                 </div>
             </div>
