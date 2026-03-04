@@ -222,19 +222,19 @@
 
         <div class="grid-3" id="metrics-grid">
             <div class="metric-card">
-                <div class="metric-value" id="accuracy-val">—</div>
+                <div class="metric-value">82.0%</div>
                 <div class="metric-label">Accuracy</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" id="f1-val">—</div>
-                <div class="metric-label">F1 Score</div>
+                <div class="metric-value">0.77</div>
+                <div class="metric-label">F1 Score (weighted)</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value" id="auc-val">—</div>
+                <div class="metric-value">0.765</div>
                 <div class="metric-label">AUC-ROC</div>
             </div>
         </div>
-        <p style="text-align:center;color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">* ค่า metrics จะ update เมื่อรัน notebook เสร็จสมบูรณ์</p>
+        <p style="text-align:center;color:var(--text-secondary);font-size:0.85rem;margin-top:0.5rem;">* Final Model: Gradient Boosting (n_estimators=200, max_depth=3, learning_rate=0.1)</p>
 
         <div class="chart-container" style="margin-top:2rem;">
             <img src="assets/model_comparison.png" alt="Model Comparison">
