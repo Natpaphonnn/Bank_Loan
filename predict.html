@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prediction | Bank Loan Status</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">📊 Loan Prediction</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#eda">EDA</a></li>
+                <li><a href="index.html#results">Results</a></li>
+                <li><a href="#predict-form">Predict</a></li>
+                <li><a href="#history">History</a></li>
+            </ul>
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+                <button class="theme-toggle" aria-label="Toggle theme">☀️</button>
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" style="min-height:50vh;padding-top:5rem;">
+        <div class="hero-content">
+            <h1>Try Prediction</h1>
+            <p class="tagline">กรอกข้อมูลสินเชื่อของคุณ เพื่อดูผลการพยากรณ์ว่าจะชำระหนี้ครบหรือไม่</p>
+        </div>
+    </section>
+
+    <!-- Prediction Form -->
+    <section id="predict-form" class="fade-in">
+        <h2 class="section-title">กรอกข้อมูลสินเชื่อ</h2>
+        <p class="section-subtitle">กรอกข้อมูลด้านล่างแล้วกด Predict เพื่อดูผลลัพธ์</p>
+
+        <form id="loanForm" class="predict-form">
+            <!-- Row 1: Loan Info -->
+            <div class="form-section">
+                <h3 class="form-section-title">ข้อมูลสินเชื่อ</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="loanAmount">Current Loan Amount ($)</label>
+                        <input type="number" id="loanAmount" placeholder="e.g. 300000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="term">Term (ระยะเวลา)</label>
+                        <select id="term" required>
+                            <option value="Short Term">Short Term</option>
+                            <option value="Long Term">Long Term</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="purpose">Purpose (วัตถุประสงค์)</label>
+                        <select id="purpose" required>
+                            <option value="Debt Consolidation">Debt Consolidation</option>
+                            <option value="Home Improvements">Home Improvements</option>
+                            <option value="Buy House">Buy House</option>
+                            <option value="Buy a Car">Buy a Car</option>
+                            <option value="Business Loan">Business Loan</option>
+                            <option value="Medical Bills">Medical Bills</option>
+                            <option value="Take a Trip">Take a Trip</option>
+                            <option value="Educational Expenses">Educational Expenses</option>
+                            <option value="small_business">Small Business</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="major_purchase">Major Purchase</option>
+                            <option value="moving">Moving</option>
+                            <option value="vacation">Vacation</option>
+                            <option value="renewable_energy">Renewable Energy</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2: Personal Info -->
+            <div class="form-section">
+                <h3 class="form-section-title">ข้อมูลส่วนตัว</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="creditScore">Credit Score</label>
+                        <input type="number" id="creditScore" placeholder="e.g. 720" min="300" max="850" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="annualIncome">Annual Income ($)</label>
+                        <input type="number" id="annualIncome" placeholder="e.g. 1200000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="yearsJob">Years in Current Job</label>
+                        <select id="yearsJob" required>
+                            <option value="0">< 1 year</option>
+                            <option value="1">1 year</option>
+                            <option value="2">2 years</option>
+                            <option value="3">3 years</option>
+                            <option value="4">4 years</option>
+                            <option value="5">5 years</option>
+                            <option value="6">6 years</option>
+                            <option value="7">7 years</option>
+                            <option value="8">8 years</option>
+                            <option value="9">9 years</option>
+                            <option value="10">10+ years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="homeOwnership">Home Ownership</label>
+                        <select id="homeOwnership" required>
+                            <option value="Home Mortgage">Home Mortgage</option>
+                            <option value="Own Home">Own Home</option>
+                            <option value="Rent">Rent</option>
+                            <option value="HaveMortgage">Have Mortgage</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 3: Credit Info -->
+            <div class="form-section">
+                <h3 class="form-section-title">ข้อมูลเครดิต</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="monthlyDebt">Monthly Debt ($)</label>
+                        <input type="number" id="monthlyDebt" step="0.01" placeholder="e.g. 15000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="creditHistory">Years of Credit History</label>
+                        <input type="number" id="creditHistory" step="0.1" placeholder="e.g. 15.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="openAccounts">Number of Open Accounts</label>
+                        <input type="number" id="openAccounts" placeholder="e.g. 10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="creditProblems">Number of Credit Problems</label>
+                        <input type="number" id="creditProblems" placeholder="e.g. 0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="creditBalance">Current Credit Balance ($)</label>
+                        <input type="number" id="creditBalance" placeholder="e.g. 200000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="maxCredit">Maximum Open Credit ($)</label>
+                        <input type="number" id="maxCredit" placeholder="e.g. 500000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bankruptcies">Bankruptcies</label>
+                        <input type="number" id="bankruptcies" placeholder="e.g. 0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taxLiens">Tax Liens</label>
+                        <input type="number" id="taxLiens" placeholder="e.g. 0" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="predict-btn">🔮 Predict Loan Status</button>
+        </form>
+    </section>
+
+    <!-- Result Section -->
+    <section id="result-section" class="fade-in" style="display:none;">
+        <div id="result-card" class="result-card">
+            <div class="result-icon" id="result-icon"></div>
+            <h2 id="result-status"></h2>
+            <p id="result-detail"></p>
+            <div class="result-meter">
+                <div class="meter-label">
+                    <span>Fully Paid</span>
+                    <span>Charged Off</span>
+                </div>
+                <div class="meter-bar">
+                    <div class="meter-fill" id="meter-fill"></div>
+                </div>
+                <p class="meter-value" id="meter-value"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="history" class="fade-in">
+        <h2 class="section-title">Prediction History</h2>
+        <p class="section-subtitle">ประวัติการทำนายทั้งหมด</p>
+
+        <div id="history-empty" class="card" style="text-align:center;padding:3rem;">
+            <p style="color:var(--text-secondary);font-size:1.1rem;">ยังไม่มีประวัติการทำนาย — ลองกรอกข้อมูลด้านบนเลย!</p>
+        </div>
+
+        <div id="history-container" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                <span id="history-count" style="color:var(--text-secondary);"></span>
+                <button class="clear-btn" id="clearHistory">ล้างประวัติทั้งหมด</button>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table" id="history-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Loan Amount</th>
+                            <th>Credit Score</th>
+                            <th>Annual Income</th>
+                            <th>Purpose</th>
+                            <th>Result</th>
+                            <th>Probability</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Bank Loan Status Prediction — Data Science Portfolio Project</p>
+        <p style="margin-top:0.5rem;">
+            <a href="index.html">← กลับหน้าหลัก</a> ·
+            <a href="https://github.com/Natpaphonnn/Bank_Loan" target="_blank">GitHub</a>
+        </p>
+    </footer>
+
+    <script>
+    // ===== Theme Toggle =====
+    const themeToggle = document.querySelector('.theme-toggle');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        document.body.setAttribute('data-theme', 'light');
+        themeToggle.textContent = '🌙';
+    }
+    themeToggle.addEventListener('click', () => {
+        const isLight = document.body.getAttribute('data-theme') === 'light';
+        if (isLight) {
+            document.body.removeAttribute('data-theme');
+            themeToggle.textContent = '☀️';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.body.setAttribute('data-theme', 'light');
+            themeToggle.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // ===== Hamburger =====
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('active')));
+
+    // ===== Scroll Animation =====
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ===== Model Data =====
+    let MODEL = null;
+
+    fetch('model_data.json')
+        .then(r => r.json())
+        .then(data => { MODEL = data; })
+        .catch(err => console.error('Failed to load model:', err));
+
+    // ===== Sigmoid =====
+    function sigmoid(z) {
+        if (z > 500) return 1;
+        if (z < -500) return 0;
+        return 1 / (1 + Math.exp(-z));
+    }
+
+    // ===== Prediction =====
+    function predict(formData) {
+        const featureValues = [];
+
+        // Numerical features
+        featureValues.push(formData.loanAmount);       // Current Loan Amount
+        featureValues.push(formData.creditScore);       // Credit Score
+        featureValues.push(formData.annualIncome);      // Annual Income
+        featureValues.push(formData.monthlyDebt);       // Monthly Debt
+        featureValues.push(formData.creditHistory);     // Years of Credit History
+        featureValues.push(formData.openAccounts);      // Number of Open Accounts
+        featureValues.push(formData.creditProblems);    // Number of Credit Problems
+        featureValues.push(formData.creditBalance);     // Current Credit Balance
+        featureValues.push(formData.maxCredit);         // Maximum Open Credit
+        featureValues.push(formData.bankruptcies);      // Bankruptcies
+        featureValues.push(formData.taxLiens);          // Tax Liens
+        featureValues.push(formData.yearsJob);          // Years in current job
+
+        // One-hot: Term (drop_first = Long Term, so Short Term = 1)
+        featureValues.push(formData.term === 'Short Term' ? 1 : 0);
+
+        // One-hot: Home Ownership (drop_first = HaveMortgage)
+        featureValues.push(formData.homeOwnership === 'Home Mortgage' ? 1 : 0);
+        featureValues.push(formData.homeOwnership === 'Own Home' ? 1 : 0);
+        featureValues.push(formData.homeOwnership === 'Rent' ? 1 : 0);
+
+        // One-hot: Purpose (drop_first = Business Loan)
+        const purposeList = ['Buy House', 'Buy a Car', 'Debt Consolidation', 'Educational Expenses',
+                             'Home Improvements', 'Medical Bills', 'Other', 'Take a Trip',
+                             'major_purchase', 'moving', 'other', 'renewable_energy',
+                             'small_business', 'vacation', 'wedding'];
+        for (const p of purposeList) {
+            featureValues.push(formData.purpose === p ? 1 : 0);
+        }
+
+        // Engineered features
+        const dti = formData.monthlyDebt / (formData.annualIncome / 12 + 1);
+        const cu = formData.creditBalance / (formData.maxCredit + 1);
+        const lti = formData.loanAmount / (formData.annualIncome + 1);
+        featureValues.push(isFinite(dti) ? dti : 0);
+        featureValues.push(isFinite(cu) ? cu : 0);
+        featureValues.push(isFinite(lti) ? lti : 0);
+
+        // Scale features
+        const scaled = featureValues.map((v, i) => {
+            const mean = MODEL.scaler_mean[i];
+            const scale = MODEL.scaler_scale[i];
+            return scale !== 0 ? (v - mean) / scale : 0;
+        });
+
+        // Linear combination
+        let z = MODEL.intercept;
+        for (let i = 0; i < scaled.length; i++) {
+            const s = scaled[i];
+            if (isFinite(s)) {
+                z += s * MODEL.coefficients[i];
+            }
+        }
+
+        return sigmoid(z);
+    }
+
+    // ===== Form Submit =====
+    document.getElementById('loanForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        if (!MODEL) {
+            alert('Model is still loading, please wait...');
+            return;
+        }
+
+        const formData = {
+            loanAmount: parseFloat(document.getElementById('loanAmount').value),
+            term: document.getElementById('term').value,
+            creditScore: parseFloat(document.getElementById('creditScore').value),
+            annualIncome: parseFloat(document.getElementById('annualIncome').value),
+            yearsJob: parseFloat(document.getElementById('yearsJob').value),
+            homeOwnership: document.getElementById('homeOwnership').value,
+            purpose: document.getElementById('purpose').value,
+            monthlyDebt: parseFloat(document.getElementById('monthlyDebt').value),
+            creditHistory: parseFloat(document.getElementById('creditHistory').value),
+            openAccounts: parseFloat(document.getElementById('openAccounts').value),
+            creditProblems: parseFloat(document.getElementById('creditProblems').value),
+            creditBalance: parseFloat(document.getElementById('creditBalance').value),
+            maxCredit: parseFloat(document.getElementById('maxCredit').value),
+            bankruptcies: parseFloat(document.getElementById('bankruptcies').value),
+            taxLiens: parseFloat(document.getElementById('taxLiens').value),
+        };
+
+        const probability = predict(formData);
+        const isChargedOff = probability >= 0.5;
+
+        // Show result
+        const resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+
+        const resultCard = document.getElementById('result-card');
+        resultCard.className = 'result-card ' + (isChargedOff ? 'result-danger' : 'result-success');
+
+        document.getElementById('result-icon').textContent = isChargedOff ? '⚠️' : '✅';
+        document.getElementById('result-status').textContent = isChargedOff ? 'Charged Off' : 'Fully Paid';
+        document.getElementById('result-detail').textContent = isChargedOff
+            ? 'Model ทำนายว่ามีความเสี่ยงสูงที่จะผิดนัดชำระหนี้'
+            : 'Model ทำนายว่ามีแนวโน้มชำระหนี้ครบตามกำหนด';
+
+        const meterFill = document.getElementById('meter-fill');
+        meterFill.style.width = (probability * 100) + '%';
+        meterFill.style.background = isChargedOff
+            ? 'linear-gradient(90deg, #f59e0b, #ef4444)'
+            : 'linear-gradient(90deg, #10b981, #3b82f6)';
+
+        document.getElementById('meter-value').textContent =
+            `Charged Off Probability: ${(probability * 100).toFixed(1)}%`;
+
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Save to history
+        saveToHistory(formData, probability, isChargedOff);
+    });
+
+    // ===== History =====
+    function getHistory() {
+        return JSON.parse(localStorage.getItem('loanPredictions') || '[]');
+    }
+
+    function saveToHistory(formData, probability, isChargedOff) {
+        const history = getHistory();
+        history.unshift({
+            date: new Date().toLocaleString('th-TH'),
+            loanAmount: formData.loanAmount,
+            creditScore: formData.creditScore,
+            annualIncome: formData.annualIncome,
+            purpose: formData.purpose,
+            result: isChargedOff ? 'Charged Off' : 'Fully Paid',
+            probability: (probability * 100).toFixed(1),
+        });
+        // Keep max 50 records
+        if (history.length > 50) history.pop();
+        localStorage.setItem('loanPredictions', JSON.stringify(history));
+        renderHistory();
+    }
+
+    function renderHistory() {
+        const history = getHistory();
+        const emptyEl = document.getElementById('history-empty');
+        const containerEl = document.getElementById('history-container');
+        const bodyEl = document.getElementById('history-body');
+        const countEl = document.getElementById('history-count');
+
+        if (history.length === 0) {
+            emptyEl.style.display = 'block';
+            containerEl.style.display = 'none';
+            return;
+        }
+
+        emptyEl.style.display = 'none';
+        containerEl.style.display = 'block';
+        countEl.textContent = `ทั้งหมด ${history.length} รายการ`;
+
+        bodyEl.innerHTML = history.map((item, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${item.date}</td>
+                <td>$${Number(item.loanAmount).toLocaleString()}</td>
+                <td>${item.creditScore}</td>
+                <td>$${Number(item.annualIncome).toLocaleString()}</td>
+                <td>${item.purpose}</td>
+                <td><span class="status-badge ${item.result === 'Charged Off' ? 'badge-danger' : 'badge-success'}">${item.result}</span></td>
+                <td>${item.probability}%</td>
+            </tr>
+        `).join('');
+    }
+
+    document.getElementById('clearHistory').addEventListener('click', () => {
+        if (confirm('ต้องการล้างประวัติการทำนายทั้งหมดหรือไม่?')) {
+            localStorage.removeItem('loanPredictions');
+            renderHistory();
+        }
+    });
+
+    // Initial render
+    renderHistory();
+    </script>
+</body>
+</html>
